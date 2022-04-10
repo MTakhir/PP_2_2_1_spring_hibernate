@@ -34,14 +34,6 @@ public class UserServiceImp implements UserService {
    @Transactional
    @Override
    public User getUserByCar(String model, int series) {
-      User user = null;
-      try(Session session = new AppConfig().getSessionFactory().getObject().openSession()) {
-         String HQL = "FROM User u LEFT OUTER JOIN FETCH u.car c WITH c.model=:m";
-         user = (User) session.createQuery(HQL).setParameter("m",model)
-                 .uniqueResult();
-      } catch (HeadlessException e) {
-         e.printStackTrace();
-      }
-      return user;
+      return userDao.getUserByCar(model, series);
    }
 }
